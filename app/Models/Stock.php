@@ -5,33 +5,28 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
  * Class Stock
  *
  * @property int $id
- * @property int $product_id
- * @property string|null $city
+ * @property string $sku
  * @property int|null $stock
- * @property Product $product
+ * @property City|null $city
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
 class Stock extends Model
 {
     protected $fillable = [
-        'product_id',
-        'city',
+        'city_id',
         'stock',
     ];
 
-    /**
-     * Get the products associated with the tag.
-     */
-    public function product(): BelongsTo
+    public function city(): HasOne
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasOne(City::class);
     }
 }

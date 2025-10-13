@@ -47,6 +47,6 @@ class Product extends Model
      */
     public function stocks(): HasMany
     {
-        return $this->hasMany(Stock::class);
+        return $this->hasMany(Stock::class, 'sku', 'sku');
     }
 }

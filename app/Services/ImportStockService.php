@@ -5,32 +5,23 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\DTOs\StockDTO;
-use App\Models\Product;
+use App\Models\City;
 use App\Models\Stock;
-use Illuminate\Support\Facades\Log;
 
 class ImportStockService
 {
     public function import(StockDTO $stockDto): ?Stock
     {
-        $product = Product::query()
-            ->where('sku', $stockDto->sku)
-            ->select('id')->first();
+        $city = City::firstOrCreate(['title' => $stockDto->city]);
 
-        if (blank($product)) {
-            Log::debug('There is no associated product with stock '.$stockDto->sku);
-
-            return null;
-        }
-
-        $stock = Stock::query()->where('product_id', $product->id)->first();
+        $stock = Stock::query()->where('sku', $stockDto->sku)->first();
         if (blank($stock)) {
             $stock = new Stock;
         }
 
+        $stock->sku = $stockDto->sku;
         $stock->stock = $stockDto->stock;
-        $stock->city = $stockDto->city;
-        $stock->product_id = $product->id;
+        $stock->city_id = $city->id;
         $stock->save();
 
         return $stock;
