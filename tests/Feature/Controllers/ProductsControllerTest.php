@@ -82,14 +82,9 @@ class ProductsControllerTest extends TestCase
     {
         $product = Product::factory()->create();
 
-        Cache::shouldReceive('has')
-            ->once()
-            ->with("product_{$product->id}")
-            ->andReturn(true);
-
         Cache::shouldReceive('get')
             ->once()
-            ->with("product_{$product->id}")
+            ->with(Product::CACHE_PREFIX.$product->id)
             ->andReturn($product);
 
         $response = $this->getJson(route('products.getProduct', ['id' => $product->id]));
@@ -122,7 +117,7 @@ class ProductsControllerTest extends TestCase
 
         $response = $this->getJson(route('products.getProduct', ['id' => $product->id]));
 
-        Cache::shouldHaveReceived('has')->with("product_{$product->id}");
+        Cache::shouldHaveReceived('get')->with(Product::CACHE_PREFIX.$product->id);
         Cache::shouldHaveReceived('put');
 
         $response
