@@ -20,7 +20,7 @@ class ProductDTO
         $tags = [];
 
         foreach ($data['tags'] as $tag) {
-            $tags[] = TagDTO::fromArray($tag['title']);
+            $tags[] = new TagDTO($tag['title']);
         }
 
         return new self(

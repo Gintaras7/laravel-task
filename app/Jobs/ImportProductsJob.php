@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\DTOs\ProductDTO;
-use App\Services\ImportProductsService;
+use App\Services\Products\ImportProductsService;
 use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;

@@ -26,16 +26,15 @@ class ImportStocksCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Import stocks';
 
     /**
      * Execute the console command.
      */
     public function handle(ProductsClientContract $productsClient)
     {
-
         try {
-            $stocks = $productsClient->getStocks(); // Collection
+            $stocks = $productsClient->getStocks();
             $total = $stocks->count();
             $batches = $stocks->chunk(self::BATCH_SIZE);
 
@@ -50,7 +49,7 @@ class ImportStocksCommand extends Command
 
             return Command::SUCCESS;
         } catch (\Throwable $throwable) {
-            $this->error('error while running command: '.$throwable->getMessage());
+            $this->error('Error while running command: '.$throwable->getMessage());
             Log::debug('Failed to import stocks', [
                 'message' => $throwable->getMessage(),
                 'exception' => $throwable,

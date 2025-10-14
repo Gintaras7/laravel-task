@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Products;
 
 use App\DTOs\ProductDTO;
 use App\DTOs\TagDTO;
@@ -34,7 +34,7 @@ class ImportProductsService
 
     /**
      * @param  array<TagDTO>  $tags
-     * @return \Illuminate\Support\Collection|Tag[]
+     * @return \Illuminate\Support\Collection<Tag>
      */
     public function importTags(array $tags): Collection
     {

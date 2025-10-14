@@ -26,14 +26,13 @@ class ImportProductsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Imports products';
 
     /**
      * Execute the console command.
      */
     public function handle(ProductsClientContract $productsClient)
     {
-
         try {
             $products = $productsClient->getProducts();
             $total = $products->count();
@@ -50,7 +49,7 @@ class ImportProductsCommand extends Command
 
             return Command::SUCCESS;
         } catch (\Throwable $throwable) {
-            $this->error('error while running command: '.$throwable->getMessage());
+            $this->error('Error while running command: '.$throwable->getMessage());
             Log::debug('Failed to import products', [
                 'message' => $throwable->getMessage(),
                 'exception' => $throwable,
