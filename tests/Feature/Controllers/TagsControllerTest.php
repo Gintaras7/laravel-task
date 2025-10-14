@@ -16,8 +16,8 @@ class TagsControllerTest extends TestCase
         $this->assertDatabaseCount(Product::class, 0);
         $this->assertDatabaseCount(Tag::class, 0);
 
-        $popularTags = Tag::factory()->count(3)->create();    // used by 4 products
-        $unpopularTags = Tag::factory()->count(40)->create(); // unused
+        $popularTags = Tag::factory()->count(3)->create();
+        $unpopularTags = Tag::factory()->count(40)->create();
 
         Product::factory()
             ->count(4)
