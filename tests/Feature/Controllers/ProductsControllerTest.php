@@ -47,7 +47,6 @@ class ProductsControllerTest extends TestCase
                         'size',
                         'photo',
                         'tags',
-                        'stocks',
                         'external_updated_at',
                         'updated_at',
                         'created_at',

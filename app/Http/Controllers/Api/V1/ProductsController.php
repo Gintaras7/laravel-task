@@ -28,7 +28,7 @@ class ProductsController extends Controller
             return response()->json(new ProductListResource($list));
         } catch (\Throwable $throwable) {
             Log::debug($throwable->getMessage(), ['exception' => $throwable]);
-            abort(500, 'Failed to get products list');
+            abort(Response::HTTP_INTERNAL_SERVER_ERROR, 'Failed to get products list');
         }
     }
 
@@ -37,13 +37,14 @@ class ProductsController extends Controller
         try {
             $product = $this->productService->getProductFromCache($id);
 
-            return response()->json(
-                data: $product ? new ProductResource($product) : null,
-                status: blank($product) ? Response::HTTP_NOT_FOUND : Response::HTTP_OK
-            );
+            if (blank($product)) {
+                return response()->json(['message' => 'Product not found'], Response::HTTP_NOT_FOUND);
+            }
+
+            return response()->json(new ProductResource($product->loadMissing('stocks')));
         } catch (\Throwable $throwable) {
             Log::debug($throwable->getMessage(), ['exception' => $throwable]);
-            abort(500, 'Failed to get a product');
+            abort(Response::HTTP_INTERNAL_SERVER_ERROR, 'Failed to get a product');
         }
     }
 }

@@ -32,7 +32,7 @@ class ProductResource extends JsonResource
             'size' => $this->resource->size,
             'photo' => $this->resource->photo,
             'tags' => TagResource::collection($this->resource->tags),
-            'stocks' => StockResource::collection($this->resource->stocks),
+            'stocks' => StockResource::collection($this->whenLoaded('stocks')),
             'external_updated_at' => $this->resource->external_updated_at,
             'updated_at' => $this->resource->updated_at->toAtomString(),
             'created_at' => $this->resource->created_at->toAtomString(),
