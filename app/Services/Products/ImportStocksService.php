@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Products;
 
 use App\DTOs\StockDTO;
 use App\Models\City;
 use App\Models\Stock;
 
-class ImportStockService
+class ImportStocksService
 {
     public function import(StockDTO $stockDto): ?Stock
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -25,8 +25,8 @@ class Stock extends Model
         'stock',
     ];
 
-    public function city(): HasOne
+    public function city(): BelongsTo
     {
-        return $this->hasOne(City::class);
+        return $this->belongsTo(City::class);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\ImportStockService;
+use App\Services\Products\ImportStocksService;
 use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -24,7 +24,7 @@ class ImportStocksJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(ImportStockService $stockService): void
+    public function handle(ImportStocksService $stockService): void
     {
         foreach ($this->stocks as $stockDto) {
             try {

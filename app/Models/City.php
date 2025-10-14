@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
  *
  * @property int $id
  * @property string $title
- * @property Collection|Stock[] $stocks
+ * @property Collection<Stock> $stocks
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -27,8 +27,8 @@ class City extends Model
     /**
      * Get the products associated with the tag.
      */
-    public function products(): BelongsToMany
+    public function products(): HasMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 }
