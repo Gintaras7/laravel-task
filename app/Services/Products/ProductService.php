@@ -17,16 +17,16 @@ class ProductService
 
     public function getProductFromCache(int $id): ?Product
     {
-        $cacheKey = "product_{$id}";
+        $key = Product::CACHE_PREFIX.$id;
 
-        if (Cache::has($cacheKey)) {
-            return Cache::get($cacheKey);
+        if (Cache::has($key)) {
+            return Cache::get($key);
         }
 
         $product = $this->productRepository->getProduct($id);
 
         if ($product !== null) {
-            Cache::put($cacheKey, $product, 3600);
+            Cache::put($key, $product, 3600);
         }
 
         return $product;

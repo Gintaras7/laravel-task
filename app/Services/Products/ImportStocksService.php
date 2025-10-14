@@ -14,7 +14,11 @@ class ImportStocksService
     {
         $city = City::firstOrCreate(['title' => $stockDto->city]);
 
-        $stock = Stock::query()->where('sku', $stockDto->sku)->first();
+        $stock = Stock::query()
+            ->where('sku', $stockDto->sku)
+            ->where('city_id', $city->id)
+            ->first();
+
         if (blank($stock)) {
             $stock = new Stock;
         }

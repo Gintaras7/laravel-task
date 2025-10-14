@@ -3,11 +3,13 @@
 namespace App\Jobs;
 
 use App\DTOs\ProductDTO;
+use App\Models\Product;
 use App\Services\Products\ImportProductsService;
 use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -36,6 +38,8 @@ class ImportProductsJob implements ShouldQueue
                     callback: fn () => $productService->import($productDto),
                     attempts: 3,
                 );
+
+                Cache::forget(Product::CACHE_PREFIX.$savedProduct->id);
 
                 Log::info("Successfully imported product SKU: {$productDto->sku}", [
                     'product_id' => $savedProduct->id,

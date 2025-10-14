@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('city_id')->constrained()->onDelete('cascade');
-            $table->string('sku')->unique()->index();
+            $table->string('sku')->index();
             $table->unsignedInteger('stock')->nullable();
             $table->timestamps();
         });

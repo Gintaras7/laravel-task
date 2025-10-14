@@ -32,6 +32,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    public const CACHE_PREFIX = 'product_';
+
     protected $fillable = [
         'sku',
         'description',

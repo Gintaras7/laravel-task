@@ -10,11 +10,7 @@ class StockDTO
         private(set) string $sku,
         private(set) int $stock,
         private(set) string $city
-    ) {
-        $this->sku = $sku;
-        $this->stock = $stock;
-        $this->city = $city;
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {
