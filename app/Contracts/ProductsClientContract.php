@@ -11,12 +11,12 @@ use Illuminate\Support\Collection;
 interface ProductsClientContract
 {
     /**
-     * @return Collection<int, ProductDTO>
+     * @return Collection<ProductDTO>
      */
     public function getProducts(): Collection;
 
     /**
-     * @return Collection<int, StockDTO>
+     * @return Collection<StockDTO>
      */
     public function getStocks(): Collection;
 }

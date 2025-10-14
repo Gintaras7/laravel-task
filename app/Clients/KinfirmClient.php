@@ -34,7 +34,7 @@ class KinfirmClient implements ProductsClientContract
     }
 
     /**
-     * @return Collection<int, ProductDTO>
+     * @return Collection<ProductDTO>
      *
      * @throws RequestException
      */

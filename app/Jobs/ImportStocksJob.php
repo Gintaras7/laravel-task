@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Services\Products\ImportStocksService;
@@ -7,6 +9,7 @@ use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ImportStocksJob implements ShouldQueue
@@ -30,13 +33,14 @@ class ImportStocksJob implements ShouldQueue
             try {
                 Log::info("Starting import stock SKU: {$stockDto->sku}");
 
-                $savedStock = $stockService->import($stockDto);
+                $savedStock = DB::transaction(
+                    callback: fn () => $stockService->import($stockDto),
+                    attempts: 3,
+                );
 
-                if (! blank($savedStock)) {
-                    Log::info("Successfully imported stock SKU: {$stockDto->sku}", [
-                        'stock_id' => $savedStock->id,
-                    ]);
-                }
+                Log::info("Successfully imported stock SKU: {$stockDto->sku}", [
+                    'stock_id' => $savedStock->id,
+                ]);
             } catch (\Throwable $e) {
                 Log::error("Failed to import stock SKU: {$stockDto->sku}", [
                     'error' => $e->getMessage(),

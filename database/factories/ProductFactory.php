@@ -16,6 +16,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->sentence(),
             'size' => $this->faker->randomElement(['XS', 'S', 'M', 'L', 'XL']),
             'photo' => $this->faker->imageUrl(192, 100, 'products', true),
+            'external_updated_at' => $this->faker->date('Y-m-d'),
         ];
     }
 }
