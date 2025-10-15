@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\ProductListResource;
 use App\Http\Resources\Api\V1\ProductResource;
-use App\Repositories\ProductRepository;
 use App\Services\Products\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -16,14 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductsController extends Controller
 {
     public function __construct(
-        private readonly ProductRepository $productRepository,
         private readonly ProductService $productService
     ) {}
 
     public function getList(): JsonResponse
     {
         try {
-            $list = $this->productRepository->getList();
+            $list = $this->productService->getList();
 
             return response()->json(new ProductListResource($list));
         } catch (\Throwable $throwable) {

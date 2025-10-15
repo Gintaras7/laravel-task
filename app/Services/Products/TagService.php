@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories;
+namespace App\Services\Products;
 
 use App\Models\Tag;
 use Illuminate\Support\Collection;
 
-class TagRepository
+class TagService
 {
     /**
      * @return Collection<Tag>
      */
-    public function getPopularByProductCount(int $limit = 10): Collection
+    public function getMostPopularList(int $limit = 10): Collection
     {
         $popularTags = Tag::query()
             ->withCount('products')

@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace App\Services\Products;
 
 use App\Models\Product;
-use App\Repositories\ProductRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 
 class ProductService
 {
-    public function __construct(private ProductRepository $productRepository)
-    {
-        //
-    }
-
     public function getProductFromCache(int $id): ?Product
     {
         $key = Product::CACHE_PREFIX.$id;
@@ -24,12 +19,17 @@ class ProductService
             return $cachedProduct;
         }
 
-        $product = $this->productRepository->getProduct($id);
+        $product = Product::query()->with('tags')->where('id', $id)->first();
 
         if ($product !== null) {
             Cache::put($key, $product, 3600);
         }
 
         return $product;
+    }
+
+    public function getList(int $perPage = 10): LengthAwarePaginator
+    {
+        return Product::query()->with('tags')->paginate($perPage);
     }
 }
